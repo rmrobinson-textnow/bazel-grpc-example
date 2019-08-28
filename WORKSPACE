@@ -1,4 +1,4 @@
-# Golang support
+# rules_go
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
@@ -16,7 +16,7 @@ go_rules_dependencies()
 
 go_register_toolchains()
 
-# Gazelle auto-generator
+# gazelle
 http_archive(
     name = "bazel_gazelle",
     urls = [
@@ -26,11 +26,11 @@ http_archive(
     sha256 = "7fc87f4170011201b1690326e8c16c5d802836e3a0d617d8f75c3af2b23180c4",
 )
 
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
+load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
 
 gazelle_dependencies()
 
-# proto dependencies
+# protobuf dependencies
 load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 
 git_repository(
@@ -44,8 +44,8 @@ load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
 
 protobuf_deps()
 
-# gRPC dependencies for Golang
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+# grpc dependencies
+load("@bazel_gazelle//:deps.bzl", "go_repository")
 
 gazelle_dependencies()
 
@@ -71,72 +71,12 @@ go_repository(
     version = "v0.3.0",
 )
 
-go_repository(
-    name = "com_github_davecgh_go_spew",
-    importpath = "github.com/davecgh/go-spew",
-    sum = "h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=",
-    version = "v1.1.0",
-)
-
-go_repository(
-    name = "com_github_gogo_protobuf",
-    importpath = "github.com/gogo/protobuf",
-    sum = "h1:/s5zKNz0uPFCZ5hddgPdo2TK2TVrUNMn0OOX8/aZMTE=",
-    version = "v1.2.1",
-)
-
-go_repository(
-    name = "com_github_golang_protobuf",
-    importpath = "github.com/golang/protobuf",
-    sum = "h1:YF8+flBXS5eO826T4nzqPrxfhQThhXl0YzfuUPu4SBg=",
-    version = "v1.3.1",
-)
-
-go_repository(
-    name = "com_github_kisielk_errcheck",
-    importpath = "github.com/kisielk/errcheck",
-    sum = "h1:ZqfnKyx9KGpRcW04j5nnPDgRgoXUeLh2YFBeFzphcA0=",
-    version = "v1.1.0",
-)
-
-go_repository(
-    name = "com_github_kisielk_gotool",
-    importpath = "github.com/kisielk/gotool",
-    sum = "h1:AV2c/EiW3KqPNT9ZKl07ehoAGi4C5/01Cfbblndcapg=",
-    version = "v1.0.0",
-)
-
-go_repository(
-    name = "com_github_mwitkow_go_proto_validators",
-    importpath = "github.com/mwitkow/go-proto-validators",
-    sum = "h1:2Org0/cGKUUUDzoLSRSsGJDqyLWrb5lG57o5+QdRr8M=",
-    version = "v0.1.0",
-)
-
-go_repository(
-    name = "com_github_pmezard_go_difflib",
-    importpath = "github.com/pmezard/go-difflib",
-    sum = "h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=",
-    version = "v1.0.0",
-)
-
-go_repository(
-    name = "com_github_stretchr_objx",
-    importpath = "github.com/stretchr/objx",
-    sum = "h1:4G4v2dO3VZwixGIRoQ5Lfboy6nUhCyYzaqnIAPPhYs4=",
-    version = "v0.1.0",
-)
-
-go_repository(
-    name = "com_github_stretchr_testify",
-    importpath = "github.com/stretchr/testify",
-    sum = "h1:TivCn/peBQ7UY8ooIcPgZFpTNSz0Q2U6UrFlUfqbe0Q=",
-    version = "v1.3.0",
-)
-
-go_repository(
-    name = "org_golang_x_tools",
-    importpath = "golang.org/x/tools",
-    sum = "h1:2eB4G6bDQDeP69ZXbOKC00S2Kf6TIiRS+DzfKsKeQU0=",
-    version = "v0.0.0-20180221164845-07fd8470d635",
+# add in the envoyproxy proto validator
+git_repository(
+    name = "com_envoyproxy_protoc_gen_validate",
+    commit = "b2e4ad3b1fe3766cf83f85a6b3755625cacf9410", # I know. For now. master as of 2019-08-27
+    shallow_since ="1566933527 -0700",
+    remote = "https://github.com/envoyproxy/protoc-gen-validate",
+    patches = ["//build:protoc-gen-validate.patch"],
+    patch_args = ["-p1"],
 )

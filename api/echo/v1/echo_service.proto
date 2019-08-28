@@ -7,7 +7,7 @@ import "google/api/client.proto";
 import "google/api/field_behavior.proto";
 import "google/api/resource.proto";
 import "google/protobuf/timestamp.proto";
-import "github.com/mwitkow/go-proto-validators/validator.proto";
+import "validate/validate.proto";
 
 // A service designed to echo user-supplied input back to the caller.
 service EchoService {
@@ -20,7 +20,10 @@ service EchoService {
 }
 
 message Phrase {
-    string value = 1 [(validator.field) = {regex: "^[a-z]{2,5}$"}];
+    string value = 1 [(validate.rules).string = {
+                        pattern: "^[a-z]{2,5}$",
+                        max_bytes: 256,
+                     }];
     google.protobuf.Timestamp processing_time = 100;
 }
 

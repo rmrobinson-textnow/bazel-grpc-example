@@ -1,0 +1,12 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["main.go"],
+    importpath = "github.com/rmrobinson-textnow/bazel-grpc-example/svc/echo/cmd/echod",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//svc/echo:go_default_library",
+        "@org_golang_google_grpc//:go_default_library",
+    ],
+)
