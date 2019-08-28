@@ -10,3 +10,15 @@
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
+
+# Build outputs
+build/
+bazel-*
+override.bazelrc
+
+# IDEs
+.idea/
+
+# Apple system file metadata
+*.DS_Store
+

@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package bazel_example.echo.v1;
+
+import "google/api/annotations.proto";
+import "google/api/client.proto";
+import "google/api/field_behavior.proto";
+import "google/api/resource.proto";
+import "google/protobuf/timestamp.proto";
+import "github.com/mwitkow/go-proto-validators/validator.proto";
+
+// A service designed to echo user-supplied input back to the caller.
+service EchoService {
+    rpc Echo(EchoRequest) returns (EchoResponse) {
+        option (google.api.http) = {
+            post: "/v1/echo"
+            body: "phrase"
+        };
+    }
+}
+
+message Phrase {
+    string value = 1 [(validator.field) = {regex: "^[a-z]{2,5}$"}];
+    google.protobuf.Timestamp processing_time = 100;
+}
+
+// The request method for the bazel_example.echo.v1.EchoService\Echo method.
+message EchoRequest {
+    Phrase phrase = 1;
+    bool validate_only = 2;
+    string request_id = 3;
+}
+message EchoResponse {
+    Phrase phrase = 1;
+}

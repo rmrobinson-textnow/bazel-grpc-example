@@ -1,0 +1,35 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+
+proto_library(
+    name = "bazel_example_echo_v1_proto",
+    srcs = ["echo_service.proto"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//thirdparty/github.com/mwitkow/go-proto-validators:validator_proto",
+        "@com_google_protobuf//:timestamp_proto",
+        "@go_googleapis//google/api:annotations_proto",
+    ],
+)
+
+go_proto_library(
+    name = "bazel_example_echo_v1_go_proto",
+    compilers = [
+        "@io_bazel_rules_go//proto:go_grpc",
+        "@io_bazel_rules_go//proto:go_proto_validate",
+    ],
+    importpath = "github.com/rmrobinson-textnow/bazel-grpc-example/api/echo/v1",
+    proto = ":bazel_example_echo_v1_proto",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_mwitkow_go_proto_validators//:go_default_library",
+        "@go_googleapis//google/api:annotations_go_proto",
+    ],
+)
+
+go_library(
+    name = "go_default_library",
+    embed = [":bazel_example_echo_v1_go_proto"],
+    importpath = "github.com/rmrobinson-textnow/bazel-grpc-example/api/echo/v1",
+    visibility = ["//visibility:public"],
+)
