@@ -22,3 +22,6 @@ override.bazelrc
 # Apple system file metadata
 *.DS_Store
 
+# Ignore proto files
+*.pb.go
+*.pb.validate.go

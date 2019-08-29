@@ -1,23 +1,13 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
-#gazelle:resolve go github.com/envoyproxy/protoc-gen-validate/validate @com_envoyproxy_protoc_gen_validate//validate:go_default_library
-
 go_library(
     name = "go_default_library",
-    srcs = [
-        "api.go",
-        "echo_service.pb.go",
-        "echo_service.pb.validate.go",
-    ],
+    srcs = ["api.go"],
     importpath = "github.com/rmrobinson-textnow/bazel-grpc-example/svc/echo",
     visibility = ["//visibility:public"],
     deps = [
-        "@com_envoyproxy_protoc_gen_validate//validate:go_default_library",
-        "@com_github_golang_protobuf//proto:go_default_library",
+        "//api/echo/v1:go_default_library",
         "@com_github_golang_protobuf//ptypes:go_default_library_gen",
-        "@go_googleapis//google/api:annotations_go_proto",
-        "@io_bazel_rules_go//proto/wkt:timestamp_go_proto",
-        "@org_golang_google_grpc//:go_default_library",
         "@org_golang_google_grpc//codes:go_default_library",
         "@org_golang_google_grpc//status:go_default_library",
     ],

@@ -5,6 +5,7 @@ import (
 	"log"
 	"net"
 
+	"github.com/rmrobinson-textnow/bazel-grpc-example/api/echo/v1"
 	"github.com/rmrobinson-textnow/bazel-grpc-example/svc/echo"
 	"google.golang.org/grpc"
 )
@@ -15,6 +16,6 @@ func main() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	grpcServer := grpc.NewServer()
-	bazel_example_echo_v1.RegisterEchoServiceServer(grpcServer, &bazel_example_echo_v1.API{})
+	bazel_example_echo_v1.RegisterEchoServiceServer(grpcServer, &echo.API{})
 	grpcServer.Serve(lis)
 }

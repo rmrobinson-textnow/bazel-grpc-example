@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	bazel_example_echo_v1 "github.com/rmrobinson-textnow/bazel-grpc-example/svc/echo"
+	"github.com/rmrobinson-textnow/bazel-grpc-example/api/echo/v1"
 	"google.golang.org/grpc"
 )
 
@@ -20,7 +20,7 @@ func main() {
 	client := bazel_example_echo_v1.NewEchoServiceClient(conn)
 	resp, err := client.Echo(context.Background(), &bazel_example_echo_v1.EchoRequest{
 		Phrase: &bazel_example_echo_v1.Phrase{
-			Value: "test",
+			Value: "testtwo",
 		},
 	})
 
