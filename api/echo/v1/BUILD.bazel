@@ -1,18 +1,5 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
-load("@io_bazel_rules_go//proto:compiler.bzl", "go_proto_compiler")
 load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
-
-# gazelle:resolve proto validate/validate.proto @com_envoyproxy_protoc_gen_validate//validate:validate_proto
-# gazelle:resolve proto go validate/validate.proto @com_envoyproxy_protoc_gen_validate//validate:go_default_library
-# gazelle:go_grpc_compilers @io_bazel_rules_go//proto:go_grpc,pgv_plugin_go
-
-go_proto_compiler(
-    name = "pgv_plugin_go",
-    suffix = ".pb.validate.go",
-    valid_archive = False,
-    plugin = "@com_envoyproxy_protoc_gen_validate//:protoc-gen-validate",
-    options = ["lang=go"],
-)
 
 proto_library(
     name = "bazel_example_echo_v1_proto",
@@ -29,7 +16,7 @@ go_proto_library(
     name = "bazel_example_echo_v1_go_proto",
     compilers = [
         "@io_bazel_rules_go//proto:go_grpc",
-        "pgv_plugin_go",
+        "//:pgv_plugin_go",
     ],
     importpath = "github.com/rmrobinson-textnow/bazel-grpc-example/api/echo/v1",
     proto = ":bazel_example_echo_v1_proto",
