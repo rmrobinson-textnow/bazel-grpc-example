@@ -13,3 +13,7 @@ The project is laid out in the following fashion:
 
 ## Field validation
 The project extends the proto specification to include definitions of what constitutes valid data for each field. It pulls in the proto validation framework created by the [Envoy](https://github.com/envoyproxy/protoc-gen-validate) project.
+
+## Run
+
+The daemon can be run from a command line by executing: `# bazel run //svc/echo/cmd/echod:echod`
