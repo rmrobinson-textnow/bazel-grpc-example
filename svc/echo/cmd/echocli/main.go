@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
 	"log"
 
@@ -10,6 +11,11 @@ import (
 )
 
 func main() {
+	var (
+		input = flag.String("input", "", "The text to have echoed back at you")
+	)
+	flag.Parse()
+
 	var opts []grpc.DialOption
 	opts = append(opts, grpc.WithInsecure())
 	conn, err := grpc.Dial("127.0.0.1:1337", opts...)
@@ -17,10 +23,11 @@ func main() {
 		log.Fatalf("fail to dial: %v", err)
 	}
 	defer conn.Close()
+
 	client := bazel_example_echo_v1.NewEchoServiceClient(conn)
 	resp, err := client.Echo(context.Background(), &bazel_example_echo_v1.EchoRequest{
 		Phrase: &bazel_example_echo_v1.Phrase{
-			Value: "testtwo",
+			Value: *input,
 		},
 	})
 

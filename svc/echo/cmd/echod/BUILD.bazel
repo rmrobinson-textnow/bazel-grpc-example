@@ -20,7 +20,7 @@ go_binary(
 )
 
 go_image(
-    name = "go_image",
+    name = "echod_container",
     srcs = ["main.go"],
     importpath = "github.com/rmrobinson-textnow/bazel-grpc-example/svc/echo/cmd/echod",
     deps = [

@@ -17,3 +17,9 @@ The project extends the proto specification to include definitions of what const
 ## Run
 
 The daemon can be run from a command line by executing: `# bazel run //svc/echo/cmd/echod:echod`
+
+The client can be run from a command line, once the daemon is running, by executing `# bazel run //svc/echo/cmd/echocli:echocli -- -input "teststr"`
+
+A couple notes:
+- the -- delineates arguments being supplied to Bazel from arguments being supplied to the program
+- the input string supported by the API is pretty limited (see the regex in echo_service.proto). Play around with different input values to see what passes and what fails.
