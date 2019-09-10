@@ -1,6 +1,8 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
 
+# gazelle:exclude echo_service.pb.validate.go
+
 proto_library(
     name = "bazel_example_echo_v1_proto",
     srcs = ["echo_service.proto"],
