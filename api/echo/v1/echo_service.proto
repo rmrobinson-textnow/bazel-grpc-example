@@ -22,7 +22,6 @@ service EchoService {
 message Phrase {
     string value = 1 [(validate.rules).string = {
                         pattern: "^[a-zA-Z0-9]{0,10}$",
-                        max_bytes: 256,
                      }];
     google.protobuf.Timestamp processing_time = 100;
 }
